@@ -5,19 +5,22 @@ import Feed from "./patterns/Feed/Feed";
 import Footer from "./patterns/Footer/Footer";
 import Menu from "./patterns/Menu/Menu";
 import { useTheme } from "@src/theme/ThemeProvider";
+import Link from "@src/components/Link/Link";
 
 export default function HomeScreen() {
-  const theme = useTheme()
+  const theme = useTheme();
 
   return (
     <Box
       tag="main"
       styleSheet={{
-        backgroundColor: theme.colors.primary.x400,
+        backgroundColor: theme.colors.neutral.x400,
         flex: 1,
-        alignItems: 'center',
+        alignItems: "center",
       }}
     >
+      <Link href="/sobre" colorVariant="negative">Vá para a página sobre</Link>
+      <Link href="https://google.com">Ir para o Google</Link>
       <Background />
       <Menu />
       <Feed>
@@ -29,5 +32,5 @@ export default function HomeScreen() {
       </Feed>
       <Footer />
     </Box>
-  )
+  );
 }
