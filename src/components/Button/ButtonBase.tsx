@@ -1,42 +1,47 @@
-import { ThemeTypographyVariants } from "@src/theme/theme";
+import React from "react";
 import styled from "styled-components";
-import Text from "../Text/Text";
-import { MouseEvent, ReactNode, useRef } from "react";
 import { useRipple } from "react-use-ripple";
+import { ThemeTypographyVariants } from "@src/theme/theme";
+import Text from "../Text/Text";
 import { StyleSheet } from "@src/theme/StyleSheet";
 import { useRouter } from "next/router";
+
+// [Composição Atual]
+// Button: tag
+// Text: tag
+// BaseComponent: tag
+// StyledComponent
 
 const StyledButton = styled(Text)<any>``;
 
 export interface ButtonBaseProps {
-  textVariant?: ThemeTypographyVariants;
-  children: ReactNode;
-  styleSheet?: StyleSheet;
   href?: string;
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  children: React.ReactNode;
+  textVariant?: ThemeTypographyVariants;
+  styleSheet?: StyleSheet;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
-
 export default function ButtonBase({
-  textVariant,
   children,
+  textVariant,
   styleSheet,
   href,
   ...props
 }: ButtonBaseProps) {
-  const ref = useRef();
   const router = useRouter();
-  const isLink = href && href.startsWith("http" || "https");
+  const ref = React.useRef();
+  const isLink = Boolean(href);
   const Tag = isLink ? "a" : "button";
+
   useRipple(ref, {
-    animationLength: 300,
-    rippleColor: "rgba(255, 255, 255, 0.7)",
+    animationLength: 600,
+    rippleColor: "rgba(255,255,255,0.7)",
   });
 
   return (
     <StyledButton
-      tag={Tag}
-      {...props}
       ref={ref}
+      tag={Tag}
       href={href}
       styleSheet={{
         border: "0",
@@ -52,6 +57,7 @@ export default function ButtonBase({
         isLink && router.push(href);
         !isLink && props.onClick && props.onClick(event);
       }}
+      {...props}
     >
       {children}
     </StyledButton>
